@@ -341,18 +341,18 @@ if __name__ == '__main__':
     smartvm_cfgxmlroot = ET.fromstring(smartvm_cfgxmldata)
     sleep(1)
     driver.find_element_by_xpath("//android.widget.TextView[@text='基本配置']").click()
-    # logPrint("读取界面与配置文件中的值")
-    # for configure, tag in configuresDict.items():
-    #     checkConfigList(configure, tag)
+    logPrint("读取界面与配置文件中的值")
+    for configure, tag in configuresDict.items():
+        checkConfigList(configure, tag)
     driver.find_element_by_xpath("//android.widget.TextView[@text='高级设置']").click()
-    # logPrint("检查可选项功能")
-    # for configure, tag in checkboxesDict.items():
-    #     checkToggleButton(configure, tag)
-    # logPrint("检查下拉选项功能")
-    # spinnerAssertContent['0'] = "翻页"
-    # spinnerAssertContent['1'] = "滑动"
-    # for configure, tag in spinnerDict.items():
-    #     checkSpinner(configure, tag)
+    logPrint("检查可选项功能")
+    for configure, tag in checkboxesDict.items():
+        checkToggleButton(configure, tag)
+    logPrint("检查下拉选项功能")
+    spinnerAssertContent['0'] = "翻页"
+    spinnerAssertContent['1'] = "滑动"
+    for configure, tag in spinnerDict.items():
+        checkSpinner(configure, tag)
 
     logPrint("检查可编辑框功能")
     for configure, tag in editTextDict.items():
