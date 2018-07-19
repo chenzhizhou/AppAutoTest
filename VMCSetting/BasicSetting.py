@@ -357,3 +357,9 @@ if __name__ == '__main__':
     logPrint("检查可编辑框功能")
     for configure, tag in editTextDict.items():
         checkEditText(configure, tag)
+    logPrint("还原最初环境：")
+    os.popen("adb push " + os.getcwd() + "\\config.xml /sdcard/inbox/config")
+    sleep(2)
+    os.popen("adb shell am broadcast -a com.inhand.intent.INBOXCORE_RESTART_APP")
+    sleep(3)
+    logPrint("还原最初环境完成")
