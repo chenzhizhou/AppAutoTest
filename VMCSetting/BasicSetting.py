@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import base64
 import random
 import datetime
 from selenium.webdriver.support.wait import WebDriverWait
@@ -81,6 +82,13 @@ def logPrint(logstr):
     with open(filepath, 'a', encoding='utf-8') as f:
         print(logstr)
         f.write(logstr + '\t\n')
+
+
+def restart_app(driver):
+    optsRestartAPP = {'command': 'am broadcast -a',
+                      'args': ['com.inhand.intent.INBOXCORE_RESTART_APP']}
+    driver.execute_script("mobile: shell", optsRestartAPP)
+
 
 def swipeToElementByXpath(driver, xpath):
     t = 250
@@ -325,11 +333,16 @@ if __name__ == '__main__':
     except:
         pass
     logPrint("初始化：")
-    os.popen("adb push " + os.getcwd() + "\\config.xml /sdcard/inbox/config")
-    sleep(2)
-    os.popen("adb shell am broadcast -a com.inhand.intent.INBOXCORE_RESTART_APP")
-    sleep(3)
+    fo = open("config.xml", "r+")
+    data = fo.read()
+    fo.close()
+    encode_configxml = base64.b64encode(data.encode('utf-8'))
+    configxml_base64 = str(encode_configxml, 'utf-8')
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', properties.desired_caps)
+    driver.push_file("/sdcard/inbox/config/config.xml", configxml_base64)
+    restart_app(driver)
     logPrint("初始化完成")
+    sleep(8)
     driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', properties.desired_caps)
     opts1 = {'command': 'cat',
              'args': ['/sdcard/inbox/config/config.xml']}
@@ -358,8 +371,12 @@ if __name__ == '__main__':
     for configure, tag in editTextDict.items():
         checkEditText(configure, tag)
     logPrint("还原最初环境：")
-    os.popen("adb push " + os.getcwd() + "\\config.xml /sdcard/inbox/config")
-    sleep(2)
-    os.popen("adb shell am broadcast -a com.inhand.intent.INBOXCORE_RESTART_APP")
-    sleep(3)
+    fo = open("config.xml", "r+")
+    data = fo.read()
+    fo.close()
+    encode_configxml = base64.b64encode(data.encode('utf-8'))
+    configxml_base64 = str(encode_configxml, 'utf-8')
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', properties.desired_caps)
+    driver.push_file("/sdcard/inbox/config/config.xml", configxml_base64)
+    restart_app(driver)
     logPrint("还原最初环境完成")

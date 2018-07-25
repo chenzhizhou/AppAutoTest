@@ -46,10 +46,6 @@
 <PaymentViewTimeout>60</PaymentViewTimeout>
 <MDB232SerialPort>----</MDB232SerialPort>
 <supportPayments>
-<supportPayment>suningpay</supportPayment>
-<supportPayment>wechat</supportPayment>
-<supportPayment>unicompay</supportPayment>
-<supportPayment>alipay</supportPayment>
 <supportPayment>cash</supportPayment>
 </supportPayments>
 </config>
